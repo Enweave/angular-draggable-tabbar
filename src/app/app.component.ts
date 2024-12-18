@@ -155,7 +155,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       }
     });
 
-    ['pointerup', 'pointerleave', 'pointercancel'].forEach((eventName) => {
+    ['pointerup', 'pointercancel'].forEach((eventName) => {
       this.renderer.listen(this.draggable.nativeElement, eventName, (event: PointerEvent) => {
         this.onPointerEnd();
       });
@@ -167,6 +167,10 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   private onPointerEnd() {
+    if (!this.pointerActive) {
+      return
+    }
+
     this.pointerActive = false;
 
     if (this.snap) {

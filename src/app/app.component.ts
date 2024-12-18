@@ -22,7 +22,7 @@ class Coordinate {
 })
 export class AppComponent implements OnInit, AfterViewInit {
   lorem: Observable<string> | undefined;
-  accumulationTime: number = 100;
+  accumulationTime: number = 10;
   pointerMoveEvents: Array<PointerEvent> = [];
   pointerActive: boolean = false;
   extended: boolean = false;
@@ -109,11 +109,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.lorem = new Observable((observer) => {
       const loremIpsum = new LoremIpsum({
         sentencesPerParagraph: {
-          max: 8,
+          max: 5,
           min: 4
         },
         wordsPerSentence: {
-          max: 16,
+          max: 10,
           min: 4
         }
       });

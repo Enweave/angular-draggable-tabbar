@@ -15,7 +15,9 @@
     </div>
     <div class="container">
       <div class="tabbar" #anchor>
-        <button (click)="toggleDraggable()" [ngClass]="{ 'extended': $extended | async }">🠉</button>
+        <button (click)="toggleDraggable()" [ngClass]="{ 'extended': $extended | async }">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><g data-name="30-Arrow Up"><path d="M25 0H7a7 7 0 0 0-7 7v18a7 7 0 0 0 7 7h18a7 7 0 0 0 7-7V7a7 7 0 0 0-7-7zm5 25a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5h18a5 5 0 0 1 5 5z"/><path d="M15 9.41V22h2V9.41l3.29 3.29 1.41-1.41-5-5a1 1 0 0 0-1.41 0l-5 5 1.41 1.41zM22 25H10v-3H8v3a1.93 1.93 0 0 0 1.93 2h12.14A1.93 1.93 0 0 0 24 25v-3h-2z"/></g></svg>
+        </button>
       </div>
     </div>
   </div>

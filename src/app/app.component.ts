@@ -138,7 +138,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       }
     });
 
-    ['pointerup','pointerleave', 'pointercancel'].forEach((eventName) => {
+    ['pointerup', 'pointerleave', 'pointercancel'].forEach((eventName) => {
       this.renderer.listen(this.draggable.nativeElement, eventName, (event: PointerEvent) => {
         this.onPointerEnd();
       });

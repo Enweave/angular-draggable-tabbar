@@ -1,4 +1,8 @@
-# IosTabbar
+# Kinda-sorta tabbar with content area, that can be dragged up and down IOS-like
+
+
+
+## rest is default angular-cli readme
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.5.
 

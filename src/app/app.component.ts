@@ -28,6 +28,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   extended: boolean = false;
   $extended: Observable<boolean>;
   evaluatePointerMove;
+  snap: boolean = true;
+  offsetRationX: number = 0;
+  offsetRationY: number = 0;
 
   @ViewChild('draggable') draggable!: ElementRef;
   @ViewChild('anchor') anchor!: ElementRef;
@@ -44,22 +47,33 @@ export class AppComponent implements OnInit, AfterViewInit {
 
       const resultClientCoord = new Coordinate(x / this.pointerMoveEvents.length, y / this.pointerMoveEvents.length);
 
-      this.moveDraggable(resultClientCoord);
+      if (this.pointerActive) {
+        this.moveDraggable(resultClientCoord);
+      }
       this.pointerMoveEvents = [];
 
     }, this.accumulationTime);
   }
 
+  extend() {
+    const translation = this.clientToTranslate(new Coordinate(0, 0), true);
+    this.renderer.setStyle(this.draggable.nativeElement, 'transform', `translateY(${translation.y}px)`);
+    this.extended = true;
+    this.$extended = of(this.extended);
+  }
+
+  collapse() {
+    this.renderer.setStyle(this.draggable.nativeElement, 'transform', 'translateY(0)');
+    this.extended = false;
+    this.$extended = of(this.extended);
+  }
+
   toggleDraggable() {
     if (this.extended) {
-      this.renderer.setStyle(this.draggable.nativeElement, 'transform', 'translateY(0)');
+      this.collapse();
     } else {
-      const translation = this.clientToTranslate(new Coordinate(0, 0), true);
-      this.renderer.setStyle(this.draggable.nativeElement, 'transform', `translateY(${translation.y}px)`);
+      this.extend();
     }
-
-    this.extended = !this.extended;
-    this.$extended = of(this.extended);
   }
 
   clientToTranslate(clientCoord: Coordinate, max: boolean = false): Coordinate {
@@ -85,6 +99,9 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     translation.x = this.clamp(0, translation.x, draggableSize.width);
     translation.y = this.clamp(-draggableSize.height, translation.y, 0);
+
+    this.offsetRationX = Math.abs(translation.x / draggableSize.width);
+    this.offsetRationY = Math.abs(translation.y / draggableSize.height);
 
     if (translation.x === 0 || translation.y === 0) {
       this.extended = false;
@@ -151,8 +168,15 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   private onPointerEnd() {
     this.pointerActive = false;
-  }
 
+    if (this.snap) {
+      if (this.offsetRationY > 0.5) {
+        this.extend();
+      } else {
+        this.collapse();
+      }
+    }
+  }
 
   private throttle(func: Function, wait: number): Function {
     let timeout: number | null = null;

@@ -61,11 +61,11 @@ button {
   }
   &:after {
     position: absolute;
-    top: -30px;
+    top: -80px;
     content: '';
     width: 100px;
-    height: 10px;
-    background: #ffffff;
+    height: 50px;
+    border-bottom: 5px solid #8a8a8a;
   }
 
   & > * {
